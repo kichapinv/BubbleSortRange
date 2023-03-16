@@ -6,28 +6,33 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        int[] firstArray = new int[] { 4, 3, 2, 0, 1, 5, 7, 6, 9, 8 };
-        int[] secondArray = new int[random.Next(100)];
-        
-
         Console.WriteLine("Lets sort a range of array by bubblesort. We will make two random arrays and sort them.");
-        
-        Console.Write("First array: ");
-        WriteAnArray(firstArray);
-        Console.WriteLine("Insert first and second border");
-        var firstBorder = Console.ReadKey(true).Key;
-        var secondBorder = Console.ReadKey(true).Key;
-        WriteAnArray(BubbleSortRange(firstArray, 2, 6));
-        
-        
+        int[] array;
+        for (int i = 0; i < 2; i++)
+        {
+            array = MakeRandomArray();
+            WriteAnArray(array);
+            WriteAnArray(BubbleSortRange(array, InsertBorders()));
+            if (i == 0) Console.WriteLine("Good! Lets try on more time.");
+        }  
+    }
 
-        WriteAnArray(BubbleSortRange(secondArray, 1, 2));
+    public static int[] InsertBorders()
+    {
+        int[] range = new int[2];
+        Console.WriteLine("Make sure that your borders will be less then length of array,\n" +
+            "and first border less then second border.");
+        Console.Write("Insert first border: ");
+        range[0] = int.Parse(Console.ReadLine());
+        Console.Write("and second border: ");
+        range[1] = int.Parse(Console.ReadLine());
+        return range;
     }
 
     public static int[] MakeRandomArray()
     {
         Console.Write("Insert the length of array: ");
-        char lengthOfArray = Console.ReadKey(true).KeyChar;
+        var lengthOfArray = int.Parse(Console.ReadLine());
         int[] array = new int[lengthOfArray];
         for (int i = 0; i < array.Length; i++)
         {
@@ -36,10 +41,10 @@ internal class Program
         return array;
     }
 
-    public static int[] BubbleSortRange(int[] array, int left, int right)
+    public static int[] BubbleSortRange(int[] array, int[] range)
     {
         for (int i = 0; i < array.Length; i++)
-            for (int j = left; j < right; j++)
+            for (int j = range[0]; j < range[1]; j++)
                 if (array[j] > array[j + 1])
                 {
                     var t = array[j + 1];
